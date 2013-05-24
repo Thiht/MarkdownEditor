@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<title>Markdown Editor</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<style>
+			.container-fluid {
+				margin-top: 10px;
+			}
+			iframe {
+				border: 0;
+				height: 600px;
+				width: 100%;
+			}
+			textarea {
+				        box-sizing: border-box;
+				   -moz-box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				font-family: monospace;
+				resize: vertical;
+				width: 100%;
+			}
+			#input, .tab-content {
+				min-height: 250px;
+			}
+			#html {
+				min-height: 240px;
+			}
+			.nav-tabs {
+				margin-bottom: 0;
+			}
+			.tab-content {
+				border-bottom: 1px solid #DDD;
+				border-left: 1px solid #DDD;
+				border-right: 1px solid #DDD;
+				padding: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="navbar navbar-static-top">
+			<div class="navbar-inner">
+				<a class="brand" href="#">Markdown Editor</a>
+				<ul class="nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="https://addons.mozilla.org/fr/firefox/addon/markdown-viewer/">Markdown Viewer</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span6">
+					<form>
+						<div class="btn-toolbar">
+							<div class="btn-group">
+								<input id="highlight" class="btn" type="button" value="Select all" />
+								<input id="clear" class="btn" type="button" value="Clear" />
+								<input id="load" class="btn btn" type="button" value="Load" />
+								<input id="save" class="btn btn-primary" type="button" value="Save" />
+							</div>
+							<div class="btn-group">
+								<a class="btn"><i class="icon-bold"></i></a>
+								<a class="btn"><i class="icon-italic"></i></a>
+							</div>
+							<div class="btn-group">
+								<a class="btn"><i class="icon-globe"></i></a>
+								<a class="btn"><i class="icon-picture"></i></a>
+							</div>
+							<div class="btn-group">
+								<a id="cheatsheet" class="btn"><i class="icon-file"></i></a>
+							</div>
+						</div>
+						<textarea id="input" autofocus>
+# Markdown example document
+This is the presentation Markdown document.
+
+It's quite useless actually but it may show you all the wonderful stuff you can do way simply with Markdown:
+
+* *italic* text...
+* **bold** text
+* ***both*** at the same time !
+* lists
+ * nested lists
+   * see how it works ?
+* and [a lot of cool things](http://daringfireball.net/projects/markdown/basics)!
+
+This version even support tables!
+This is     | a     | TABLE!
+------------|-------|-------
+Interesting | isn't | it ?</textarea>
+					</form>
+				</div>
+				<div class="span6">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
+						<li><a href="#html" data-toggle="tab">HTML</a></li>
+						<li><a href="#pdf" data-toggle="tab">PDF<sup>beta</sup></a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="overview" class="tab-pane active"></div>
+						<textarea id="html" class="tab-pane" onclick="select()"></textarea>
+						<div id="pdf" class="tab-pane">
+							<div class="btn-toolbar">
+								<input id="pdf-download" class="btn btn-primary" type="button" value="Download as PDF" />
+							</div>
+							<iframe id="pdf-overview" src=""></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Bootstrap -->
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap-tab.js"></script>
+		<!-- PDF -->
+		<script src="js/jspdf.js"></script>
+		<script src="js/jspdf.plugin.from_html.js"></script>
+		<script src="js/jspdf.plugin.standard_fonts_metrics.js"></script>
+		<script src="js/jspdf.plugin.split_text_to_size.js"></script>
+		<script src="js/FileSaver.js"></script>
+		<script src="js/BlobBuilder.js"></script>
+		<!-- Markdown Editor -->
+		<script src="js/marked.js"></script>
+		<script src="js/editor.js"></script>
+	</body>
+</html>
