@@ -4,50 +4,163 @@
 		<title>Markdown Editor</title>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="css/bootstrap.css" />
-		<style>
-			.container-fluid {
-				margin-top: 10px;
-			}
-			iframe {
-				border: 0;
-				height: 600px;
-				width: 100%;
-			}
-			textarea {
-				        box-sizing: border-box;
-				   -moz-box-sizing: border-box;
-				-webkit-box-sizing: border-box;
-				font-family: monospace;
-				resize: vertical;
-				width: 100%;
-			}
-			#input, .tab-content {
-				min-height: 250px;
-			}
-			#html {
-				min-height: 240px;
-			}
-			.nav-tabs {
-				margin-bottom: 0;
-			}
-			.tab-content {
-				border-bottom: 1px solid #DDD;
-				border-left: 1px solid #DDD;
-				border-right: 1px solid #DDD;
-				padding: 10px;
-			}
-		</style>
+		<link rel="stylesheet" href="css/prism.css" />
+		<link rel="stylesheet" href="css/design.css" />
 	</head>
 	<body>
+		<!-- Navbar -->
 		<div class="navbar navbar-static-top">
 			<div class="navbar-inner">
 				<a class="brand" href="#">Markdown Editor</a>
 				<ul class="nav">
 					<li class="active"><a href="#">Home</a></li>
 					<li><a href="https://addons.mozilla.org/fr/firefox/addon/markdown-viewer/">Markdown Viewer</a></li>
+					<li class="dropdown">
+						<a id="libraries" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">Libs <b class="caret"></b></a>
+						<ul class="dropdown-menu" aria-labelledby="libraries" role="menu">
+							<li role="presentation">
+								<a href="https://github.com/chjj/marked" tabindex="-1" role="menuitem">marked</a>
+							</li>
+							<li role="presentation">
+								<a href="http://jspdf.com/" tabindex="-1" role="menuitem">jsPDF</a>
+							</li>
+							<li role="presentation">
+								<a href="http://jquery.com/" tabindex="-1" role="menuitem">jQuery</a>
+							</li>
+							<li role="presentation">
+								<a href="https://github.com/eligrey/FileSaver.js" tabindex="-1" role="menuitem">FileSaver.js</a>
+							</li>
+							<li role="presentation">
+								<a href="https://github.com/eligrey/Blob.js" tabindex="-1" role="menuitem">Blob.js</a>
+							</li>
+							<li role="presentation">
+								<a href="https://github.com/LeaVerou/prism/" tabindex="-1" role="menuitem">Prism</a>
+							</li>
+							<li class="divider" role="presentation"></li>
+							<li role="presentation">
+								<a href="http://twitter.github.io/bootstrap/" tabindex="-1" role="menuitem">Bootstrap</a>
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</div>
+		<!-- /Navbar -->
+
+		<!-- Cheat sheet -->
+		<div id="cheatsheet" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="markdownCheatSheet" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 id="markdownCheatSheet">Markdown Cheat Sheet</h3>
+			</div>
+			<div class="modal-body">
+				<p>
+					<a href="http://daringfireball.net/projects/markdown/basics">Markdown reference</a><br />
+					<a href="https://help.github.com/articles/github-flavored-markdown">Github Flavored Markdown</a>
+				</p>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Markdown</th>
+							<th>Rendering</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<p><code># Title 1</code></p>
+								<p><code>## Title 2</code></p>
+							</td>
+							<td>
+								<h1>Title 1</h1>
+								<h2>Title 2</h2>
+							</td>
+						</tr>
+						<tr>
+							<td><p><code>*italic*</code></p></td>
+							<td><em>italic</em></td>
+						</tr>
+						<tr>
+							<td><p><code>**bold**</code></p></td>
+							<td><strong>bold</strong></td>
+						</tr>
+						<tr>
+							<td><p><code>[Label](http://example.com/)</code></p></td>
+							<td><a href="http://example.com/">Label</a></td>
+						</tr>
+						<tr>
+							<td><p><code>![Alt text](http://i.imgur.com/oRtkQ0w.png)</code></p></td>
+							<td><img src="http://i.imgur.com/oRtkQ0w.png" alt="Alternative text" /></td>
+						</tr>
+						<tr>
+							<td><pre><code>* Item 1
+* Item 2
+ * Nested item
+* ...</code></pre></td>
+							<td>
+								<ul>
+									<li>Item 1</li>
+									<li>Item 2</li>
+									<ul>
+										<li>Nested item</li>
+									</ul>
+									<li>...</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td><pre><code>1. Item 1
+2. Item 2
+ 1. Nested item
+3. ...</code></pre></td>
+							<td>
+								<ol>
+									<li>Item 1</li>
+									<li>Item 2</li>
+									<ol>
+										<li>Nested item</li>
+									</ol>
+									<li>...</li>
+								</ol>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<pre>&gt; Quote
+
+&gt; On several lines</pre>
+							</td>
+							<td>
+								<blockquote>
+									<p>Quote</p>
+									<p>On several lines</p>
+								</blockquote>
+							</td>
+						</tr>
+						<tr>
+							<td><p><code>- - -</code></p></td>
+							<td><hr /></td>
+						</tr>
+						<tr>
+							<td><p><code>`inline code`</code></p></td>
+							<td><p><code>inline code</code></p></td>
+						</tr>
+						<tr>
+							<td><pre><code>```javascript
+alert('block code');
+```</code></pre></td>
+							<td><pre><code class="lang-javascript">alert('block code');</code></pre></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			</div>
+		</div>
+		<!-- /Cheat sheet -->
+
+		<!-- Markdown Editor -->
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span6">
@@ -60,22 +173,22 @@
 								<input id="save" class="btn btn-primary" type="button" value="Save" />
 							</div>
 							<div class="btn-group">
-								<a class="btn"><i class="icon-bold"></i></a>
-								<a class="btn"><i class="icon-italic"></i></a>
+								<a class="btn" onclick="MarkdownEditor.insertTag('**', '**');"><i class="icon-bold"></i></a>
+								<a class="btn" onclick="MarkdownEditor.insertTag('*', '*');"><i class="icon-italic"></i></a>
 							</div>
 							<div class="btn-group">
 								<a class="btn"><i class="icon-globe"></i></a>
 								<a class="btn"><i class="icon-picture"></i></a>
 							</div>
 							<div class="btn-group">
-								<a id="cheatsheet" class="btn"><i class="icon-file"></i></a>
+								<a href="#cheatsheet" class="btn" role="button" data-toggle="modal"><i class="icon-file"></i></a>
 							</div>
 						</div>
 						<textarea id="input" autofocus>
 # Markdown example document
 This is the presentation Markdown document.
 
-It's quite useless actually but it may show you all the wonderful stuff you can do way simply with Markdown:
+It's quite useless actually because there's already a cheat sheet, but it may show you all the wonderful stuff you can do way simply with Markdown:
 
 * *italic* text...
 * **bold** text
@@ -88,38 +201,48 @@ It's quite useless actually but it may show you all the wonderful stuff you can 
 This version even support tables!
 This is     | a     | TABLE!
 ------------|-------|-------
-Interesting | isn't | it ?</textarea>
+With        | some  | values</textarea>
 					</form>
 				</div>
 				<div class="span6">
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
 						<li><a href="#html" data-toggle="tab">HTML</a></li>
-						<li><a href="#pdf" data-toggle="tab">PDF<sup>beta</sup></a></li>
+						<li><a href="#pdf" data-toggle="tab">PDF <sup>beta</sup></a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="overview" class="tab-pane active"></div>
-						<textarea id="html" class="tab-pane" onclick="select()"></textarea>
+						<textarea id="html" class="tab-pane"></textarea>
 						<div id="pdf" class="tab-pane">
-							<div class="btn-toolbar">
+							<!--<form class="form-inline">
 								<input id="pdf-download" class="btn btn-primary" type="button" value="Download as PDF" />
-							</div>
+								<input id="pdf-filename" type="text" placeholder="Filename" />
+							</form>-->
 							<iframe id="pdf-overview" src=""></iframe>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- /Markdown Editor -->
+
 		<!-- Bootstrap -->
-		<script src="js/jquery.js"></script>
+		<script src="js/jquery-1.9.1.min.js"></script>
 		<script src="js/bootstrap-tab.js"></script>
-		<!-- PDF -->
-		<script src="js/jspdf.js"></script>
+		<script src="js/bootstrap-modal.js"></script>
+		<script src="js/bootstrap-dropdown.js"></script>
+
+		<!-- jsPDF -->
+		<script src="js/jspdf.min.js"></script>
 		<script src="js/jspdf.plugin.from_html.js"></script>
 		<script src="js/jspdf.plugin.standard_fonts_metrics.js"></script>
 		<script src="js/jspdf.plugin.split_text_to_size.js"></script>
-		<script src="js/FileSaver.js"></script>
-		<script src="js/BlobBuilder.js"></script>
+		<!--<script src="js/FileSaver.min.js"></script>
+		<script src="js/BlobBuilder.min.js"></script>-->
+
+		<!-- Prism -->
+		<script src="js/prism.js"></script>
+
 		<!-- Markdown Editor -->
 		<script src="js/marked.js"></script>
 		<script src="js/editor.js"></script>

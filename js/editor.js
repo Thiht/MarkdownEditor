@@ -20,15 +20,42 @@ var MarkdownEditor = {
 		var markedOutput = marked(this.input.value);
 		overview.innerHTML = markedOutput.replace(/<table>/g, '<table class="table">');
 		html.innerHTML = markedOutput.escapeHtml();
+		Prism.highlightAll();
 	},
 
 	generatePDF: function() {
 		MarkdownEditor.doc = new jsPDF();
 		MarkdownEditor.doc.fromHTML(MarkdownEditor.overview.innerHTML, 15, 15, {'elementHandlers': {}});
-		document.getElementById('pdf-download').onclick = function() {
+		// save() doesn't work if output('datauristring') is called before
+		/*document.getElementById('pdf-download').onclick = function() {
 			MarkdownEditor.doc.save('MarkdownDocument.pdf');
-		};
-		//$('#pdf-overview').attr('src', MarkdownEditor.doc.output('datauristring'));
+		};*/
+		document.getElementById('pdf-overview').src = MarkdownEditor.doc.output('datauristring');
+	},
+
+	insertTag: function(startTag, endTag, tagType) {
+		var scroll = this.input.scrollTop;
+		this.input.focus();
+
+		if (window.ActiveXObject) {
+			var textRange = document.selection.createRange(),
+			    currentSelection = textRange.text;
+
+			textRange.text = startTag + currentSelection + endTag;
+			textRange.moveStart("character", -endTag.length - currentSelection.length);
+			textRange.moveEnd("character", -endTag.length);
+			textRange.select();
+		} else {
+			var startSelection   = this.input.value.substring(0, this.input.selectionStart),
+			    currentSelection = this.input.value.substring(this.input.selectionStart, this.input.selectionEnd),
+			    endSelection     = this.input.value.substring(this.input.selectionEnd);
+
+			this.input.value = startSelection + startTag + currentSelection + endTag + endSelection;
+			this.input.focus();
+			this.input.setSelectionRange(startSelection.length + startTag.length, startSelection.length + startTag.length + currentSelection.length);
+		}
+		this.input.scrollTop = scroll;
+		this.render();
 	}
 };
 
@@ -50,6 +77,7 @@ MarkdownEditor.highlight.onfocus = function() {
 MarkdownEditor.clear.onclick = function() {
 	MarkdownEditor.input.value = '';
 	MarkdownEditor.render();
+	MarkdownEditor.generatePDF();
 };
 
 // "Save" button
@@ -63,6 +91,7 @@ MarkdownEditor.save.onclick = function() {
 MarkdownEditor.load.onclick = function() {
 	MarkdownEditor.input.value = localStorage.getItem('save');
 	MarkdownEditor.render();
+	MarkdownEditor.generatePDF();
 };
 
 // On load

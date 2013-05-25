@@ -1,0 +1,31 @@
+.container-fluid {
+	margin-top: 10px;
+}
+iframe {
+	border: 0;
+	height: 600px;
+	width: 100%;
+}
+textarea {
+	        box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	font-family: monospace;
+	resize: vertical;
+	width: 100%;
+}
+#input, .tab-content {
+	min-height: 250px;
+}
+#html {
+	min-height: 240px;
+}
+.nav-tabs {
+	margin-bottom: 0;
+}
+.tab-content {
+	border-bottom: 1px solid #DDD;
+	border-left: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+	padding: 10px;
+}
