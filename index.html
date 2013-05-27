@@ -173,30 +173,29 @@ alert('block code');
 								<input id="save" class="btn btn-primary" type="button" value="Save" />
 							</div>
 							<div class="btn-group">
-								<a class="btn" onclick="MarkdownEditor.insertTag('**', '**');"><i class="icon-bold"></i></a>
-								<a class="btn" onclick="MarkdownEditor.insertTag('*', '*');"><i class="icon-italic"></i></a>
+								<a class="btn" title="Bold" onclick="MarkdownEditor.insertTag('bold');"><i class="icon-bold"></i></a>
+								<a class="btn" title="Italic" onclick="MarkdownEditor.insertTag('italic');"><i class="icon-italic"></i></a>
 							</div>
 							<div class="btn-group">
-								<a class="btn"><i class="icon-globe"></i></a>
-								<a class="btn"><i class="icon-picture"></i></a>
+								<a class="btn" title="Link" onclick="MarkdownEditor.insertTag('link');"><i class="icon-globe"></i></a>
+								<a class="btn" title="Image" onclick="MarkdownEditor.insertTag('image');"><i class="icon-picture"></i></a>
 							</div>
 							<div class="btn-group">
-								<a href="#cheatsheet" class="btn" role="button" data-toggle="modal"><i class="icon-file"></i></a>
+								<a href="#cheatsheet" class="btn" title="Cheat Sheet" role="button" data-toggle="modal"><i class="icon-file"></i></a>
 							</div>
 						</div>
-						<textarea id="input" autofocus>
-# Markdown example document
+						<textarea id="input" autofocus># Markdown example document
 This is the presentation Markdown document.
 
 It's quite useless actually because there's already a cheat sheet, but it may show you all the wonderful stuff you can do way simply with Markdown:
 
-* *italic* text...
-* **bold** text
-* ***both*** at the same time !
-* lists
+1. *italic* text...
+1. **bold** text...
+1. ***both*** at the same time !
+1. lists
  * nested lists
    * see how it works ?
-* and [a lot of cool things](http://daringfireball.net/projects/markdown/basics)!
+1. and [a lot of cool things](http://daringfireball.net/projects/markdown/basics)!
 
 This version even support tables!
 This is     | a     | TABLE!
@@ -214,10 +213,6 @@ With        | some  | values</textarea>
 						<div id="overview" class="tab-pane active"></div>
 						<textarea id="html" class="tab-pane"></textarea>
 						<div id="pdf" class="tab-pane">
-							<!--<form class="form-inline">
-								<input id="pdf-download" class="btn btn-primary" type="button" value="Download as PDF" />
-								<input id="pdf-filename" type="text" placeholder="Filename" />
-							</form>-->
 							<iframe id="pdf-overview" src=""></iframe>
 						</div>
 					</div>
@@ -237,8 +232,6 @@ With        | some  | values</textarea>
 		<script src="js/jspdf.plugin.from_html.js"></script>
 		<script src="js/jspdf.plugin.standard_fonts_metrics.js"></script>
 		<script src="js/jspdf.plugin.split_text_to_size.js"></script>
-		<!--<script src="js/FileSaver.min.js"></script>
-		<script src="js/BlobBuilder.min.js"></script>-->
 
 		<!-- Prism -->
 		<script src="js/prism.js"></script>
