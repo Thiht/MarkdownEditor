@@ -10,6 +10,7 @@ var MarkdownEditor = {
 	input: document.getElementById('input'),
 	overview: document.getElementById('overview'),
 	html: document.getElementById('html'),
+	htmlpage: document.getElementById('htmlpage'),
 	highlight: document.getElementById('highlight'),
 	clear: document.getElementById('clear'),
 	save: document.getElementById('save'),
@@ -19,7 +20,18 @@ var MarkdownEditor = {
 	render: function() {
 		var markedOutput = marked(this.input.value);
 		overview.innerHTML = markedOutput.replace(/<table>/g, '<table class="table">');
-		html.innerHTML = markedOutput.escapeHtml();
+		html.value = markedOutput;
+		htmlpage.value = '<!DOCTYPE html>\n' +
+		                 '<html>\n' +
+		                 '<head>\n' +
+		                 '<title>Document</title>\n' +
+		                 '<meta charset="utf-8" />\n' +
+		                 '<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" />\n' +
+		                 '</head>\n' +
+		                 '<body class="container">\n' +
+		                 markedOutput.replace(/<table>/g, '<table class="table">') +
+		                 '</body>\n' +
+		                 '</html>';
 		Prism.highlightAll();
 	},
 

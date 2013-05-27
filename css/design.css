@@ -17,7 +17,7 @@ textarea {
 #input, .tab-content {
 	min-height: 250px;
 }
-#html {
+#html, #htmlpage {
 	min-height: 240px;
 }
 .nav-tabs {
