@@ -12,10 +12,13 @@ var MarkdownEditor = {
 	html: document.getElementById('html'),
 	htmlpage: document.getElementById('htmlpage'),
 	highlight: document.getElementById('highlight'),
-	clear: document.getElementById('clear'),
 	save: document.getElementById('save'),
 	load: document.getElementById('load'),
-	doc: null,
+
+	init: function() {
+		input.style.overflow = 'hidden';
+		this.loadData();
+	},
 
 	render: function() {
 		var markedOutput = marked(this.input.value);
@@ -26,23 +29,13 @@ var MarkdownEditor = {
 		                 '<head>\n' +
 		                 '<title>Document</title>\n' +
 		                 '<meta charset="utf-8" />\n' +
-		                 '<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" />\n' +
+		                 '<link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" />\n' +
 		                 '</head>\n' +
 		                 '<body class="container">\n' +
 		                 markedOutput.replace(/<table>/g, '<table class="table">') +
 		                 '</body>\n' +
 		                 '</html>';
 		Prism.highlightAll();
-	},
-
-	generatePDF: function() {
-		MarkdownEditor.doc = new jsPDF();
-		MarkdownEditor.doc.fromHTML(MarkdownEditor.overview.innerHTML, 15, 15, {'elementHandlers': {}});
-		// save() doesn't work if output('datauristring') is called before
-		/*document.getElementById('pdf-download').onclick = function() {
-			MarkdownEditor.doc.save('MarkdownDocument.pdf');
-		};*/
-		document.getElementById('pdf-overview').src = MarkdownEditor.doc.output('datauristring');
 	},
 
 	insertTag: function(tagType) {
@@ -114,16 +107,54 @@ var MarkdownEditor = {
 
 		this.input.scrollTop = scroll;
 		this.render();
+	},
+
+	saveData: function() {
+		localStorage.setItem('save', input.value);
+		load.disabled = (localStorage.getItem('save') ? false : true);
+		alert('Data saved successfully!')
+	},
+
+	loadData: function() {
+		if (localStorage.getItem('save')) {
+			input.value = localStorage.getItem('save');
+			this.render();
+			this.resizeInput();
+		}
+	},
+
+	resizeInput: function() {
+		var offset = input.offsetHeight - input.clientHeight;
+		input.style.height = 'auto';
+		input.style.height = (input.scrollHeight + offset) + 'px';
 	}
 };
 
-// Auto-preview
-MarkdownEditor.input.onkeyup = function() {
+// Tags
+Mousetrap.bind('alt+b', function() {
+	MarkdownEditor.insertTag('bold');
+});
+
+Mousetrap.bind('alt+i', function() {
+	MarkdownEditor.insertTag('italic');
+});
+
+Mousetrap.bind('alt+l', function() {
+	MarkdownEditor.insertTag('link');
+});
+
+Mousetrap.bind('alt+p', function() {
+	MarkdownEditor.insertTag('image');
+});
+
+// Auto-preview and resizing
+MarkdownEditor.input.onkeyup = function(e) {
 	MarkdownEditor.render();
 };
 
-MarkdownEditor.input.onchange = function() {
-	MarkdownEditor.generatePDF();
+// Resizing
+MarkdownEditor.input.onchange = MarkdownEditor.input.onpaste = MarkdownEditor.input.oncut = function() {
+	MarkdownEditor.resizeInput();
 };
 
 // "Select all" button
@@ -131,35 +162,29 @@ MarkdownEditor.highlight.onfocus = function() {
 	MarkdownEditor.input.select();
 };
 
-// "Clear" button
-MarkdownEditor.clear.onclick = function() {
-	MarkdownEditor.input.value = '';
-	MarkdownEditor.render();
-	MarkdownEditor.generatePDF();
-};
-
 // "Save" button
 MarkdownEditor.save.onclick = function() {
-	localStorage.setItem('save', MarkdownEditor.input.value);
-	MarkdownEditor.load.disabled = (localStorage.getItem('save') ? false : true);
-	alert('Data saved successfully!')
+	MarkdownEditor.saveData();
 };
+
+Mousetrap.bind('alt+s', function() {
+	MarkdownEditor.saveData();
+});
 
 // "Load" button
 MarkdownEditor.load.onclick = function() {
-	MarkdownEditor.input.value = localStorage.getItem('save');
-	MarkdownEditor.render();
-	MarkdownEditor.generatePDF();
+	MarkdownEditor.loadData();
 };
 
 // On load
 (function() {
-	if(!localStorage) {
+	if (!localStorage) {
 		MarkdownEditor.load.disabled = MarkdownEditor.save.disabled = true;
 	} else {
 		if (!localStorage.getItem('save'))
 			MarkdownEditor.load.disabled = true;
 	}
+	MarkdownEditor.init();
 	MarkdownEditor.render();
-	MarkdownEditor.generatePDF();
+	MarkdownEditor.resizeInput();
 })();

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 	<head>
-		<title>Markdown Editor</title>
+		<title># Markdown Editor</title>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="css/bootstrap.css" />
 		<link rel="stylesheet" href="css/prism.css" />
@@ -11,7 +11,7 @@
 		<!-- Navbar -->
 		<div class="navbar navbar-static-top">
 			<div class="navbar-inner">
-				<a class="brand" href="#">Markdown Editor</a>
+				<a class="brand" href="#"># Markdown Editor</a>
 				<ul class="nav">
 					<li class="active"><a href="#">Home</a></li>
 					<li><a href="https://addons.mozilla.org/fr/firefox/addon/markdown-viewer/">Markdown Viewer</a></li>
@@ -22,16 +22,7 @@
 								<a href="https://github.com/chjj/marked" tabindex="-1" role="menuitem">marked</a>
 							</li>
 							<li role="presentation">
-								<a href="http://jspdf.com/" tabindex="-1" role="menuitem">jsPDF</a>
-							</li>
-							<li role="presentation">
-								<a href="http://jquery.com/" tabindex="-1" role="menuitem">jQuery</a>
-							</li>
-							<li role="presentation">
-								<a href="https://github.com/eligrey/FileSaver.js" tabindex="-1" role="menuitem">FileSaver.js</a>
-							</li>
-							<li role="presentation">
-								<a href="https://github.com/eligrey/Blob.js" tabindex="-1" role="menuitem">Blob.js</a>
+								<a href="http://craig.is/killing/mice" tabindex="-1" role="menuitem">Mousetrap</a>
 							</li>
 							<li role="presentation">
 								<a href="https://github.com/LeaVerou/prism/" tabindex="-1" role="menuitem">Prism</a>
@@ -39,6 +30,9 @@
 							<li class="divider" role="presentation"></li>
 							<li role="presentation">
 								<a href="http://twitter.github.io/bootstrap/" tabindex="-1" role="menuitem">Bootstrap</a>
+							</li>
+							<li role="presentation">
+								<a href="http://jquery.com/" tabindex="-1" role="menuitem">jQuery</a>
 							</li>
 						</ul>
 					</li>
@@ -168,23 +162,22 @@ alert('block code');
 						<div class="btn-toolbar">
 							<div class="btn-group">
 								<input id="highlight" class="btn" type="button" value="Select all" />
-								<input id="clear" class="btn" type="button" value="Clear" />
 								<input id="load" class="btn btn" type="button" value="Load" />
-								<input id="save" class="btn btn-primary" type="button" value="Save" />
+								<input id="save" class="btn btn-primary" type="button" value="Save" title="Save (Alt+S)" />
 							</div>
 							<div class="btn-group">
-								<a class="btn" title="Bold" onclick="MarkdownEditor.insertTag('bold');"><i class="icon-bold"></i></a>
-								<a class="btn" title="Italic" onclick="MarkdownEditor.insertTag('italic');"><i class="icon-italic"></i></a>
+								<a class="btn" title="Bold (Alt+B)" onclick="MarkdownEditor.insertTag('bold');"><i class="icon-bold"></i></a>
+								<a class="btn" title="Italic (Alt+I)" onclick="MarkdownEditor.insertTag('italic');"><i class="icon-italic"></i></a>
 							</div>
 							<div class="btn-group">
-								<a class="btn" title="Link" onclick="MarkdownEditor.insertTag('link');"><i class="icon-globe"></i></a>
-								<a class="btn" title="Image" onclick="MarkdownEditor.insertTag('image');"><i class="icon-picture"></i></a>
+								<a class="btn" title="Link (Alt+L)" onclick="MarkdownEditor.insertTag('link');"><i class="icon-globe"></i></a>
+								<a class="btn" title="Picture (Alt+P)" onclick="MarkdownEditor.insertTag('image');"><i class="icon-picture"></i></a>
 							</div>
 							<div class="btn-group">
 								<a href="#cheatsheet" class="btn" title="Cheat Sheet" role="button" data-toggle="modal"><i class="icon-file"></i></a>
 							</div>
 						</div>
-						<textarea id="input" autofocus># Markdown example document
+						<textarea id="input" class="mousetrap" autofocus># Markdown example document
 This is the presentation Markdown document.
 
 It's quite useless actually because there's already a cheat sheet, but it may show you all the wonderful stuff you can do way simply with Markdown:
@@ -208,38 +201,35 @@ With        | some  | values</textarea>
 						<li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
 						<li><a href="#html" data-toggle="tab">HTML code</a></li>
 						<li><a href="#htmlpage" data-toggle="tab">HTML page</a></li>
-						<li><a href="#pdf" data-toggle="tab">PDF <sup>beta</sup></a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="overview" class="tab-pane active"></div>
 						<textarea id="html" class="tab-pane"></textarea>
 						<textarea id="htmlpage" class="tab-pane"></textarea>
-						<div id="pdf" class="tab-pane">
-							<iframe id="pdf-overview" src=""></iframe>
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- /Markdown Editor -->
 
-		<!-- Bootstrap -->
+		<!-- jQuery -->
 		<script src="js/jquery-1.9.1.min.js"></script>
+
+		<!-- Bootstrap -->
 		<script src="js/bootstrap-tab.js"></script>
 		<script src="js/bootstrap-modal.js"></script>
 		<script src="js/bootstrap-dropdown.js"></script>
 
-		<!-- jsPDF -->
-		<script src="js/jspdf.min.js"></script>
-		<script src="js/jspdf.plugin.from_html.js"></script>
-		<script src="js/jspdf.plugin.standard_fonts_metrics.js"></script>
-		<script src="js/jspdf.plugin.split_text_to_size.js"></script>
+		<!-- marked -->
+		<script src="js/marked.js"></script>
 
 		<!-- Prism -->
 		<script src="js/prism.js"></script>
 
+		<!-- Mousetrap -->
+		<script src="js/mousetrap.min.js"></script>
+
 		<!-- Markdown Editor -->
-		<script src="js/marked.js"></script>
 		<script src="js/editor.js"></script>
 	</body>
 </html>
